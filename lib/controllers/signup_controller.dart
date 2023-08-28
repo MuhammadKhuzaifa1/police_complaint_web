@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:police_complaint_web/screens/side_menu.dart';
 import 'dart:io';
 import 'package:uuid/uuid.dart';
 
@@ -34,7 +35,7 @@ class SignupController with ChangeNotifier{
           temp = temp + email[i].toLowerCase();
           data.add(temp);
         }
-        final res  = await FirebaseReferences().usersReference.doc(valuee.user!.uid).set({
+        final res  = await FirebaseReferences().stationsReference.doc(valuee.user!.uid).set({
           'id' : valuee.user!.uid,
           'email' : email,
           'emailForSearch' : data,
@@ -43,12 +44,12 @@ class SignupController with ChangeNotifier{
           final firebaseStorageRef = FirebaseStorage.instance.ref().child("${Uuid().v4()}.jpg");
           await firebaseStorageRef.putData(dataa!);
           String downloadURL = await firebaseStorageRef.getDownloadURL();
-          FirebaseReferences().usersReference.doc(valuee.user!.uid).update({
+          FirebaseReferences().stationsReference.doc(valuee.user!.uid).update({
             'imageUrl' : downloadURL.toString(),
           }).then((value){
+            Get.off(SideMenuScreen());
             Utils.toastMessage("Create account successfully");
           });
-          Utils.toastMessage("Create account successfully");
 
         }).catchError((e){
           setloading(false);

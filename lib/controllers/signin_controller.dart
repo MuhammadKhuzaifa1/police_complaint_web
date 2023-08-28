@@ -19,13 +19,8 @@ class SignInController with ChangeNotifier{
     try{
       final user = await FirebaseReferences().auth.
       signInWithEmailAndPassword(email: email!, password: password!).then((value){
-        if(FirebaseReferences().auth.currentUser!.emailVerified){
-
-        }else{
-
-        }
-      }).then((value){
         Get.off(SideMenuScreen());
+        setloading(false);
       }).catchError((e){
         setloading(false);
         Utils.toastMessage(e.toString().replaceAll(RegExp(r'\[.*?\]'), ''));

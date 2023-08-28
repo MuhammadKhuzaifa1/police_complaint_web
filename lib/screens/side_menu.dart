@@ -1,8 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:police_complaint_web/constants/app_assets.dart';
 import 'package:police_complaint_web/constants/app_colors.dart';
 import 'package:police_complaint_web/constants/app_text_style.dart';
+import 'package:police_complaint_web/constants/firebase_references.dart';
 import 'package:police_complaint_web/screens/dashboard.dart';
 import 'package:police_complaint_web/screens/police_stations.dart';
 
@@ -19,6 +21,11 @@ class SideMenuScreen extends StatefulWidget {
 class _SideMenuScreenState extends State<SideMenuScreen> {
   PageController pageController = PageController();
   SideMenuController sideMenu = SideMenuController();
+
+  String? name; 
+  String? email;
+
+  
 
   @override
   void initState() {
@@ -202,4 +209,5 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
       ),
     );
   }
+
 }
