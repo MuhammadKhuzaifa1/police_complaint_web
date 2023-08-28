@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1081804346757",
+    "project_id": "police-complaint-d8b4a",
+    "storage_bucket": "police-complaint-d8b4a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081804346757:android:23b0a70c872d2100f220ec",
+        "android_client_info": {
+          "package_name": "com.example.policecomplaintweb.police_complaint_web"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081804346757-9qa4fg8ccrb5iq81enje3tspnarpaqjj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr4F1u3dUJMUFHrnKMfQz00JBKF-pA81s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081804346757-9qa4fg8ccrb5iq81enje3tspnarpaqjj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
