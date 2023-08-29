@@ -22,7 +22,7 @@ class SignupController with ChangeNotifier{
     notifyListeners();
   }
 
-  userSignUp({String? email, String? password, String? district,Uint8List? dataa}) async {
+  userSignUp({String? email, String? password, String? district,Uint8List? dataa, String? name, String? address }) async {
     setloading(true);
     try{
       UserCredential? userCredential = await FirebaseReferences().auth.
@@ -40,6 +40,8 @@ class SignupController with ChangeNotifier{
           'email' : email,
           'emailForSearch' : data,
           'district': district,
+          'name' : name,
+          'address' : address,
         }).then((valu) async {
           final firebaseStorageRef = FirebaseStorage.instance.ref().child("${Uuid().v4()}.jpg");
           await firebaseStorageRef.putData(dataa!);

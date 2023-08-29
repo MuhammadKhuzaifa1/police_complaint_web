@@ -31,8 +31,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formkey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final stationNameController = TextEditingController();
+  final stationAddressController = TextEditingController();
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
+  final stationNameFocusNode = FocusNode();
+  final stationAddressFocusNode = FocusNode();
   final ValueNotifier<bool> _hide = ValueNotifier(true);
   String? selectedDistricts;
   Uint8List? _imageData;
@@ -43,6 +47,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
     passwordController.dispose();
     emailFocusNode.dispose();
     passwordFocusNode.dispose();
+    stationNameFocusNode.dispose();
+    stationAddressFocusNode.dispose();
+    stationNameController.dispose();
+    stationAddressController.dispose();
     super.dispose();
   }
 
@@ -243,6 +251,68 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ],
                           ),
                           const SizedBox(height: 5),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Station Name",
+                                style: AppTextStyle.normalTextStyle(),
+                              ),
+                              const SizedBox(height: 3),
+                              InputTextField(
+                                myController: stationNameController,
+                                focusNode: stationNameFocusNode,
+                                prefixIcon: Icons.drive_file_rename_outline,
+                                keyboardType: TextInputType.emailAddress,
+                                obsureText: false,
+                                hint: "Enter Station Name",
+                                onFieldSubmittedValue: (value) {
+                                  Utils.fieldFocus(
+                                      context, emailFocusNode, passwordFocusNode);
+                                },
+                                onValidator: (value) {
+                                  if (value.toString().isNotEmpty) {
+                                    return null;
+                                  }else {
+                                    return "Enter station name";
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Station Address",
+                                style: AppTextStyle.normalTextStyle(),
+                              ),
+                              const SizedBox(height: 3),
+                              InputTextField(
+                                myController: stationAddressController,
+                                focusNode: stationAddressFocusNode,
+                                prefixIcon: Icons.location_on_outlined,
+                                keyboardType: TextInputType.emailAddress,
+                                obsureText: false,
+                                hint: "Enter Station Name",
+                                onFieldSubmittedValue: (value) {
+                                  Utils.fieldFocus(
+                                      context, emailFocusNode, passwordFocusNode);
+                                },
+                                onValidator: (value) {
+                                  if (value.toString().isNotEmpty) {
+                                    return null;
+                                  }else {
+                                    return "Enter station address";
+                                  }
+                                },
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 5),
+
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -304,6 +374,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                         password: passwordController.text,
                                         district: selectedDistricts,
                                         dataa: _imageData,
+                                        name: stationNameController.text,
+                                        address: stationAddressController.text,
                                       );
                                     }else{
                                       Utils.toastMessage("Please select your station city");
