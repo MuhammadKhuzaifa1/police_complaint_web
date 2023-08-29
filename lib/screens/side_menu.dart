@@ -25,10 +25,18 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
   String? name; 
   String? email;
 
-  
+  getdata(){
+    FirebaseReferences().stationsReference.doc(FirebaseReferences().auth.currentUser!.uid).get().then((value){
+      setState(() {
+        name = value['name'];
+        email = value['email'];
+      });
+    });
+  }
 
   @override
   void initState() {
+    getdata();
     sideMenu.addListener((index) {
       pageController.jumpToPage(index);
     });
@@ -84,8 +92,8 @@ class _SideMenuScreenState extends State<SideMenuScreen> {
                         AppAssets.logo,
                       ),
                       const SizedBox(height: 4),
-                      const Text("Mardan Statino",style: TextStyle(fontSize: 16,color: AppColors.whiteColor),),
-                      const Text("demo@gamil.com",style: TextStyle(fontSize: 16,color: AppColors.whiteColor),),
+                      Text(name??"Mardan Statino",style: TextStyle(fontSize: 16,color: AppColors.whiteColor),),
+                      Text(email??"demo@gamil.com",style: TextStyle(fontSize: 16,color: AppColors.whiteColor),),
                     ],
                   ),
                 ),

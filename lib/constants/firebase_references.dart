@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
-class FirebaseReferences{
+class FirebaseReferences {
 
   FirebaseAuth auth = FirebaseAuth.instance;
   CollectionReference stationsReference = FirebaseFirestore.instance.collection('stations');

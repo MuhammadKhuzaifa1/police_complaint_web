@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,7 +60,12 @@ class _DashboardState extends State<Dashboard> {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(10),
-                child: ListView.builder(
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance.collection('complaints').snapshots(),
+                  builder: (context, snapshot) {
+                    if(snapshot.hasData){
+                      return ListView.builder(
+                        itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index) {
                     return Container(
                       height: 80,
@@ -81,9 +87,10 @@ class _DashboardState extends State<Dashboard> {
                               ),
                               SizedBox(width: 20),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text("data",style: TextStyle(fontSize: 20,color: AppColors.greenColor),),
-                                  Text("data",style: TextStyle(fontSize: 20,color: AppColors.greenColor),),
+                                  Text("${snapshot.data!.docs[index]['name']} / ${snapshot.data!.docs[index]['fatherName']}",style: TextStyle(fontSize: 20,color: AppColors.greenColor),),
+                                  Text(snapshot.data!.docs[index]['date'],style: TextStyle(fontSize: 20,color: AppColors.greenColor),),
                                 ],
                               )
                             ],
@@ -93,7 +100,11 @@ class _DashboardState extends State<Dashboard> {
                               Column(
                                 children: [
                                   Text("Status",style: TextStyle(fontSize: 20,color: AppColors.greenColor),),
-                                  CircleAvatar(radius: 15,)
+                                  CircleAvatar(radius: 15,
+                                  backgroundColor: snapshot.data!.docs[index]['status'] == 'processing' ? AppColors.processingColor : 
+                                  snapshot.data!.docs[index]['status'] == 'accept' ? AppColors.processedColor :
+                                  snapshot.data!.docs[index]['status'] == 'reject' ? AppColors.rejectColor : AppColors.whiteColor
+                                  )
                                 ],
                               ),
                               SizedBox(width: 20),
@@ -138,7 +149,12 @@ class _DashboardState extends State<Dashboard> {
                       ),
                     );
                   },
-                ),
+                );
+                    }else{
+                      return Center(child: CircularProgressIndicator());
+                    }
+                  },
+                )
               ),
             ),
           )
