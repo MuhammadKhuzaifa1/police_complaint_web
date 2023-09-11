@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 
 class Utils {
   static void fieldFocus(
@@ -42,7 +43,7 @@ class Utils {
             title: Text("Alert"),
             content: Text(text!),
             actions: [
-              // CupertinoDialogAction(child: Text("Close"),onPressed: () => Get.back(),),
+              CupertinoDialogAction(child: Text("Close"),onPressed: () => Get.back(),),
               CupertinoDialogAction(isDefaultAction: true, child: Text("Confirm"),onPressed: onPressed),
             ],
         )

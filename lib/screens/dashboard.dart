@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:police_complaint_web/constants/app_colors.dart';
+import 'package:police_complaint_web/constants/firebase_references.dart';
 import 'package:police_complaint_web/screens/view_complaint.dart';
 import 'package:police_complaint_web/utilites/pie_chart.dart';
+import 'package:police_complaint_web/utilites/utils.dart';
 
 import '../constants/app_text_style.dart';
 
@@ -61,7 +63,8 @@ class _DashboardState extends State<Dashboard> {
               child: Padding(
                 padding: const EdgeInsets.all(10),
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('complaints').snapshots(),
+                  stream: FirebaseFirestore.instance.collection('complaints').
+                    where('stationId', isEqualTo: FirebaseReferences().auth.currentUser!.uid).snapshots(),
                   builder: (context, snapshot) {
                     if(snapshot.hasData){
                       return ListView.builder(
@@ -113,7 +116,21 @@ class _DashboardState extends State<Dashboard> {
                                   Row(
                                     children: [
                                       CupertinoButton(
-                                        onPressed: () { Get.to(ViewComplaint());},
+                                        onPressed: () { Get.to(ViewComplaint(
+                                          name: snapshot.data!.docs[index]['name'],
+                                          complaintType: snapshot.data!.docs[index]['complaintType'],
+                                          alreadyVisit: snapshot.data!.docs[index]['visit'],
+                                          placeOfIncident: snapshot.data!.docs[index]['placeOfIncident'],
+                                          address: snapshot.data!.docs[index]['placeOfIncident'],
+                                          district: snapshot.data!.docs[index]['districtOfIncident'],
+                                          gender: snapshot.data!.docs[index]['gender'],
+                                          mobileNo: snapshot.data!.docs[index]['mobileNumber'],
+                                          cnic: snapshot.data!.docs[index]['cnicNo'],
+                                          email: snapshot.data!.docs[index]['email'],
+                                          fatherName: snapshot.data!.docs[index]['fatherName'],
+                                          date: snapshot.data!.docs[index]['date'],
+                                          id: snapshot.data!.docs[index]['id'],
+                                        ));},
                                         padding: EdgeInsets.zero,
                                         child: Container(
                                           width: 80,
@@ -127,7 +144,16 @@ class _DashboardState extends State<Dashboard> {
                                       ),
                                       const SizedBox(width: 10),
                                       CupertinoButton(
-                                        onPressed: () { },
+                                        onPressed: () {
+                                          Utils().alertDialog(
+                                            context: context,
+                                            text: "Are you sure to delete this complaint",
+                                            onPressed: () {
+                                              FirebaseFirestore.instance.collection('complaints').doc(snapshot.data!.docs[index]['id']).delete();
+                                              Get.back();
+                                            },
+                                          );
+                                        },
                                         padding: EdgeInsets.zero,
                                         child: Container(
                                           width: 80,
